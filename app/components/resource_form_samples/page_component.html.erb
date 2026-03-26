@@ -1,0 +1,74 @@
+﻿<main class="resource-form-sample">
+  <section class="resource-form-sample__table-panel">
+    <div class="resource-form-sample__panel-header">
+      <div>
+        <p class="resource-form-sample__crumb"><%= '영업관리 / 거래처관리 / 거래처관리' %></p>
+        <h1><%= '거래처관리 ResourceForm 샘플' %></h1>
+      </div>
+      <div class="resource-form-sample__badges">
+        <span class="badge badge-outline">ViewComponent</span>
+        <span class="badge badge-outline">Stimulus</span>
+        <span class="badge badge-outline">DaisyUI v5</span>
+        <span class="badge badge-outline">Propshaft</span>
+      </div>
+    </div>
+
+    <div class="resource-form-sample__table-wrap">
+      <table class="resource-form-sample__table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>순번</th>
+            <th>거래처코드</th>
+            <th>거래처명</th>
+            <th>거래처구분그룹</th>
+            <th>거래처구분</th>
+            <th>사업자번호</th>
+            <th>관리법인</th>
+            <th>국가</th>
+            <th>사용</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% clients.each_with_index do |client, index| %>
+            <tr class="<%= index.zero? ? 'is-selected' : nil %>">
+              <td><span class="resource-form-sample__row-dot"></span></td>
+              <td><%= index + 1 %></td>
+              <td><strong><%= client[:client_code] %></strong></td>
+              <td><%= client[:client_name] %></td>
+              <td><%= client[:client_group] %></td>
+              <td><%= client[:client_type] %></td>
+              <td><%= client[:business_number] %></td>
+              <td><%= client[:corporation_code] %></td>
+              <td><%= client[:country_code] %></td>
+              <td><span class="badge badge-success badge-outline"><%= client[:active] %></span></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="resource-form-sample__detail-panel">
+    <div class="resource-form-sample__detail-header">
+      <p><%= '선택 거래처' %>: <strong><%= active_client[:client_code] %></strong></p>
+      <div class="resource-form-sample__tabs">
+        <% tabs.each_with_index do |label, index| %>
+          <button type="button" class="btn btn-sm <%= index.zero? ? 'btn-primary' : 'btn-ghost' %>"><%= label %></button>
+        <% end %>
+      </div>
+    </div>
+
+    <%= render Ui::ResourceFormComponent.new(
+      model: model,
+      url: helpers.resource_form_sample_path,
+      method: :patch,
+      cols: 3,
+      title: '거래처기본정보',
+      description: '스크린샷의 업무형 다크 UI 밀도에 맞춰 거래처 기본정보 탭의 입력 항목을 ResourceForm으로 분리한 샘플입니다.',
+      submit_label: '저장',
+      cancel_url: helpers.resource_form_sample_path,
+      fields: form_fields
+    ) %>
+  </section>
+</main>

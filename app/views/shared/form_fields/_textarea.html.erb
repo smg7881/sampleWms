@@ -1,0 +1,21 @@
+﻿<div <%= tag.attributes(class: wrapper_class, style: wrapper_style, data: wrapper_data) %>>
+  <fieldset class="<%= mode == :model ? 'fieldset w-full resource-form-fieldset' : 'fieldset w-full search-form-fieldset' %>">
+    <label class="label" for="<%= field_id %>">
+      <span class="label-text"><%= label_text %></span>
+    </label>
+    <textarea
+      id="<%= field_id %>"
+      name="<%= input_name %>"
+      class="textarea textarea-bordered w-full <%= mode == :model ? "resource-form-control resource-form-textarea#{' resource-form-control--error' if has_error}" : 'search-form-control' %>"
+      rows="<%= field[:rows] || 3 %>"
+      <%= 'required' if mode == :model && field[:required] %>
+      <%= 'disabled' if mode == :model && field[:disabled] %>
+      <%= 'readonly' if mode == :model && field[:readonly] %>
+      <%= tag.attributes(data: input_data) if mode == :model %>><%= field_value %></textarea>
+    <% if error_text.present? %>
+      <p class="label"><span class="label-text-alt text-error"><%= error_text %></span></p>
+    <% elsif help_text.present? %>
+      <p class="label"><span class="label-text-alt"><%= help_text %></span></p>
+    <% end %>
+  </fieldset>
+</div>

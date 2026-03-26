@@ -1,0 +1,52 @@
+<article
+  class="workspace-panel"
+  data-shell-target="panel"
+  data-panel-id="<%= panel[:id] %>"
+  <%= "hidden" unless active %>>
+  <div class="workspace-page-header">
+    <div class="workspace-page-title">
+      <span class="workspace-page-title__icon"><%= ui_icon(panel[:icon]) %></span>
+      <h1><%= panel[:title] %></h1>
+    </div>
+  </div>
+
+  <section class="workspace-metrics">
+    <% panel[:metrics].each_with_index do |metric, index| %>
+      <div class="metric-card metric-card--<%= index %>">
+        <div class="metric-card__label"><%= metric[:label] %></div>
+        <div class="metric-card__value"><%= metric[:value] %></div>
+        <% if metric[:delta].present? %>
+          <div class="metric-card__delta"><%= metric[:delta] %></div>
+        <% end %>
+      </div>
+    <% end %>
+  </section>
+
+  <section class="workspace-card">
+    <div class="workspace-card__header">
+      <h2><%= panel[:id] == "overview" ? "최근 공지사항" : "최근 작업 현황" %></h2>
+      <button type="button" class="workspace-card__link"><%= panel[:id] == "overview" ? "전체 보기" : "새로고침" %></button>
+    </div>
+
+    <div class="workspace-table-wrap">
+      <table class="workspace-table">
+        <thead>
+          <tr>
+            <% panel[:table][:columns].each do |column| %>
+              <th><%= column %></th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% panel[:table][:rows].each do |row| %>
+            <tr>
+              <% row.each do |cell| %>
+                <td><%= cell %></td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</article>

@@ -1,0 +1,29 @@
+<header class="topbar">
+  <div class="topbar__identity">
+    <button type="button" class="topbar__toggle" data-action="click->shell#toggleSidebar" aria-label="사이드 메뉴 토글">
+      <span class="toggle-when-open"><%= ui_icon("chevrons-left") %></span>
+      <span class="toggle-when-collapsed"><%= ui_icon("chevrons-right") %></span>
+    </button>
+
+    <div class="topbar__breadcrumb-wrap">
+      <span class="topbar__home"><%= ui_icon("home") %></span>
+      <span class="topbar__breadcrumb" data-shell-target="breadcrumb"><%= active_trail %></span>
+    </div>
+  </div>
+
+  <div class="topbar__actions">
+    <label class="topbar__search">
+      <%= ui_icon("search") %>
+      <input
+        type="search"
+        placeholder="검색... (⌘K)"
+        aria-label="메뉴 검색"
+        data-action="input->shell#filterMenus">
+    </label>
+
+    <button type="button" class="topbar__icon-button" aria-label="즐겨찾기"><%= ui_icon("star") %></button>
+    <button type="button" class="topbar__icon-button" aria-label="알림"><%= ui_icon("bell") %></button>
+    <button type="button" class="topbar__icon-button" aria-label="설정"><%= ui_icon("settings") %></button>
+    <button type="button" class="topbar__icon-button" aria-label="로그아웃"><%= ui_icon("log-out") %></button>
+  </div>
+</header>

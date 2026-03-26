@@ -1,0 +1,3 @@
+<% fields.each do |field| %>
+  <%= render partial: "shared/form_fields/#{field_partial(field)}", locals: field_locals(field) %>
+<% end %>

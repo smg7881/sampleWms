@@ -1,0 +1,161 @@
+<main class="search-sample client-search-sample">
+  <header class="client-search-page-header">
+    <div>
+      <p class="client-search-page-header__crumb"><%= "\uc601\uc5c5\uad00\ub9ac / \uac70\ub798\ucc98\uad00\ub9ac / \uac70\ub798\ucc98\uad00\ub9ac" %></p>
+      <h1><%= "\uac70\ub798\ucc98\uad00\ub9ac SearchForm \uc0d8\ud50c" %></h1>
+      <p class="client-search-page-header__description">
+        <%= "ViewComponent + Stimulus + DaisyUI v5 \uc870\ud569\uc73c\ub85c \uc870\ud68c \uc870\uac74 \ud328\ub110\uc744 \uc5c5\ubb34\ud615 \ub2e4\ud06c \ud14c\ub9c8\uc5d0 \ub9de\ucdb0 \uad6c\uc131\ud55c \uc0d8\ud50c\uc785\ub2c8\ub2e4." %>
+      </p>
+    </div>
+
+    <div class="client-search-page-header__badges">
+      <span class="badge badge-outline">ViewComponent</span>
+      <span class="badge badge-outline">Stimulus</span>
+      <span class="badge badge-outline">DaisyUI v5</span>
+      <span class="badge badge-outline">Importmap</span>
+    </div>
+  </header>
+
+  <section class="client-search-summary-grid">
+    <% summary_cards.each do |card| %>
+      <article class="client-search-summary-card">
+        <p><%= card[:label] %></p>
+        <strong><%= card[:value] %></strong>
+      </article>
+    <% end %>
+  </section>
+
+  <%= render SearchForm::Component.new(
+    title: "\uc870\ud68c \uc870\uac74",
+    description: "\uacf5\uc6a9 field renderer\ub97c \uc0ac\uc6a9\ud558\ub418, \uc0c1\ub2e8 \uac80\uc0c9 \ud328\ub110\uc740 \uac70\ub798\ucc98\uad00\ub9ac \ud654\uba74 \ubc00\ub3c4\uc5d0 \ub9de\ucdb0 \uc870\uc815\ud588\uc2b5\ub2c8\ub2e4.",
+    url: helpers.search_form_sample_path,
+    fields: sample_fields,
+    values: filters,
+    cols: 4,
+    enable_collapse: true,
+    collapsed_rows: 1,
+    actions_after: 3,
+    actions_span: '24 s:12 m:6'
+  ) %>
+
+  <section class="client-search-panel">
+    <div class="client-search-panel__header">
+      <div>
+        <p class="client-search-panel__eyebrow"><%= "\uac70\ub798\ucc98 \ubaa9\ub85d" %></p>
+        <h2><%= "\uc870\ud68c \uacb0\uacfc" %></h2>
+      </div>
+
+      <div class="client-search-panel__header-actions">
+        <div class="client-search-filter-pills">
+          <% if active_filter_tags.any? %>
+            <% active_filter_tags.each do |label, value| %>
+              <span class="badge badge-outline"><%= label %>: <%= value %></span>
+            <% end %>
+          <% else %>
+            <span class="badge badge-ghost"><%= "\uc804\uccb4 \uc870\ud68c" %></span>
+          <% end %>
+        </div>
+
+        <div class="client-search-toolbar">
+          <button type="button" class="btn btn-sm btn-primary"><%= "\ud589\ucd94\uac00" %></button>
+          <button type="button" class="btn btn-sm btn-outline btn-error"><%= "\ud589\uc0ad\uc81c" %></button>
+          <button type="button" class="btn btn-sm btn-outline btn-success"><%= "\uc800\uc7a5" %></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="client-search-table-wrap">
+      <table class="client-search-table">
+        <thead>
+          <tr>
+            <th><%= "\uc0c1\ud0dc" %></th>
+            <th><%= "\uc21c\ubc88" %></th>
+            <th><%= "\uac70\ub798\ucc98\ucf54\ub4dc" %></th>
+            <th><%= "\uac70\ub798\ucc98\uba85" %></th>
+            <th><%= "\uac70\ub798\ucc98\uad6c\ubd84\uadf8\ub8f9" %></th>
+            <th><%= "\uac70\ub798\ucc98\uad6c\ubd84" %></th>
+            <th><%= "\uc0ac\uc5c5\uc790\ubc88\ud638" %></th>
+            <th><%= "\uad00\ub9ac\ubc95\uc778" %></th>
+            <th><%= "\uad6d\uac00" %></th>
+            <th><%= "\uc0ac\uc6a9\uc5ec\ubd80" %></th>
+            <th><%= "\uc218\uc815\uc790" %></th>
+            <th><%= "\uc218\uc815\uc77c\uc2dc" %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if clients.any? %>
+            <% clients.each_with_index do |client, index| %>
+              <tr>
+                <td><span class="client-search-table__state <%= row_status_class(client[:active]) %>"></span></td>
+                <td><%= index + 1 %></td>
+                <td><strong><%= client[:client_code] %></strong></td>
+                <td><%= client[:client_name] %></td>
+                <td><%= client[:client_group] %></td>
+                <td><%= client[:client_type] %></td>
+                <td><%= client[:business_number] %></td>
+                <td><%= client[:corporation_name] %></td>
+                <td><%= client[:country] %></td>
+                <td><span class="<%= active_badge_class(client[:active]) %>"><%= client[:active] %></span></td>
+                <td><%= client[:manager] %></td>
+                <td><%= client[:modified_at] %></td>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr>
+              <td colspan="12" class="client-search-table__empty"><%= "\uc870\ud68c \uacb0\uacfc\uac00 \uc5c6\uc2b5\ub2c8\ub2e4." %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="client-detail-panel">
+    <div class="client-detail-panel__header">
+      <p><%= "\uc120\ud0dd \uac70\ub798\ucc98" %>: <strong><%= selected_client ? selected_client[:client_code] : '-' %></strong></p>
+      <div class="client-detail-panel__tabs">
+        <button type="button" class="btn btn-sm btn-primary"><%= "\uac70\ub798\ucc98\uae30\ubcf8\uc815\ubcf4" %></button>
+        <button type="button" class="btn btn-sm btn-ghost"><%= "\uac70\ub798\ucc98\ucd94\uac00\uc815\ubcf4" %></button>
+        <button type="button" class="btn btn-sm btn-ghost"><%= "\uac70\ub798\ucc98\ub2f4\ub2f9\uc790" %></button>
+        <button type="button" class="btn btn-sm btn-ghost"><%= "\uac70\ub798\ucc98\uc791\uc5c5\uc7a5" %></button>
+      </div>
+    </div>
+
+    <% if selected_client %>
+      <div class="client-detail-grid">
+        <article class="client-detail-field">
+          <span><%= "\uac70\ub798\ucc98\ucf54\ub4dc" %></span>
+          <strong><%= selected_client[:client_code] %></strong>
+        </article>
+        <article class="client-detail-field">
+          <span><%= "\uac70\ub798\ucc98\uba85" %></span>
+          <strong><%= selected_client[:client_name] %></strong>
+        </article>
+        <article class="client-detail-field">
+          <span><%= "\uad00\ub9ac\ubc95\uc778" %></span>
+          <strong><%= selected_client[:corporation_name] %></strong>
+        </article>
+        <article class="client-detail-field">
+          <span><%= "\uc0ac\uc5c5\uc790\ubc88\ud638" %></span>
+          <strong><%= selected_client[:business_number] %></strong>
+        </article>
+        <article class="client-detail-field">
+          <span><%= "\uac70\ub798\ucc98\uad6c\ubd84\uadf8\ub8f9" %></span>
+          <strong><%= selected_client[:client_group] %></strong>
+        </article>
+        <article class="client-detail-field">
+          <span><%= "\uac70\ub798\ucc98\uad6c\ubd84" %></span>
+          <strong><%= selected_client[:client_type] %></strong>
+        </article>
+        <article class="client-detail-field">
+          <span><%= "\uad6d\uac00" %></span>
+          <strong><%= selected_client[:country] %></strong>
+        </article>
+        <article class="client-detail-field">
+          <span><%= "\uc0ac\uc6a9\uc5ec\ubd80" %></span>
+          <strong><%= active_label(selected_client[:active]) %></strong>
+        </article>
+      </div>
+    <% end %>
+  </section>
+</main>

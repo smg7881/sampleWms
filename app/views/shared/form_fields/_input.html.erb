@@ -1,0 +1,56 @@
+﻿<div <%= tag.attributes(class: wrapper_class, style: wrapper_style, data: wrapper_data) %>>
+  <fieldset class="<%= mode == :model ? 'fieldset w-full resource-form-fieldset' : 'fieldset w-full search-form-fieldset' %>">
+    <label class="label" for="<%= field_id %>">
+      <span class="label-text"><%= label_text %></span>
+    </label>
+
+    <% if mode == :model && action_button.blank? %>
+      <input
+        id="<%= field_id %>"
+        name="<%= input_name %>"
+        value="<%= field_value %>"
+        type="<%= field[:input_type] || 'text' %>"
+        class="input input-bordered w-full resource-form-control<%= ' resource-form-control--error' if has_error %>"
+        style="<%= control_style %>"
+        placeholder="<%= placeholder_text %>"
+        <%= 'required' if field[:required] %>
+        <%= 'disabled' if field[:disabled] %>
+        <%= 'readonly' if field[:readonly] %>
+        autocomplete="<%= field[:autocomplete] || 'off' %>"
+        <%= tag.attributes(data: input_data) %>>
+    <% elsif action_button.present? %>
+      <div class="join w-full search-form-input-group" style="<%= control_style %>">
+        <input
+          id="<%= field_id %>"
+          name="<%= input_name %>"
+          value="<%= field_value %>"
+          type="text"
+          class="input input-bordered join-item w-full search-form-control"
+          placeholder="<%= placeholder_text %>"
+          autocomplete="<%= field[:autocomplete] || 'off' %>">
+        <button type="button" class="btn join-item search-form-inline-button" aria-label="<%= action_button[:aria_label] %>">
+          <%= ui_icon(action_button[:icon]) %>
+          <% if action_button[:label].present? %>
+            <span><%= action_button[:label] %></span>
+          <% end %>
+        </button>
+      </div>
+    <% else %>
+      <input
+        id="<%= field_id %>"
+        name="<%= input_name %>"
+        value="<%= field_value %>"
+        type="text"
+        class="input input-bordered w-full search-form-control"
+        style="<%= control_style %>"
+        placeholder="<%= placeholder_text %>"
+        autocomplete="<%= field[:autocomplete] || 'off' %>">
+    <% end %>
+
+    <% if error_text.present? %>
+      <p class="label"><span class="label-text-alt text-error"><%= error_text %></span></p>
+    <% elsif help_text.present? %>
+      <p class="label"><span class="label-text-alt"><%= help_text %></span></p>
+    <% end %>
+  </fieldset>
+</div>

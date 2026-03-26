@@ -1,0 +1,14 @@
+﻿<div class="resource-form-actions" data-resource-form-target="buttonGroup">
+  <% if cancel_url.present? %>
+    <%= link_to "취소", cancel_url, class: "btn btn-sm btn-ghost" %>
+  <% end %>
+
+  <button type="button" class="btn btn-sm btn-ghost" data-action="resource-form#reset" data-resource-form-target="resetBtn">
+    <%= "초기화" %>
+  </button>
+
+  <button type="submit" class="btn btn-sm btn-primary" data-resource-form-target="submitBtn">
+    <span data-resource-form-target="submitText"><%= submit_label %></span>
+    <span class="loading loading-spinner loading-xs" data-resource-form-target="submitSpinner" hidden></span>
+  </button>
+</div>

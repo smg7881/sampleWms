@@ -1,0 +1,13 @@
+﻿<div <%= tag.attributes(class: wrapper_class, style: wrapper_style, data: wrapper_data) %>>
+  <fieldset class="<%= mode == :model ? 'fieldset w-full resource-form-fieldset' : 'fieldset w-full search-form-fieldset' %>">
+    <label class="label cursor-pointer justify-start gap-3">
+      <input id="<%= field_id %>" name="<%= input_name %>" value="1" type="checkbox" class="checkbox checkbox-primary" <%= 'checked' if checked %> <%= tag.attributes(data: input_data) if mode == :model %>>
+      <span class="label-text"><%= label_text %></span>
+    </label>
+    <% if error_text.present? %>
+      <p class="label"><span class="label-text-alt text-error"><%= error_text %></span></p>
+    <% elsif help_text.present? %>
+      <p class="label"><span class="label-text-alt"><%= help_text %></span></p>
+    <% end %>
+  </fieldset>
+</div>

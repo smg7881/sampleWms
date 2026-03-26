@@ -1,0 +1,28 @@
+<section class="tab-strip">
+  <div class="tab-strip__tabs" data-shell-target="tabList">
+    <% tabs.each do |tab| %>
+      <button
+        type="button"
+        class="workspace-tab <%= "is-active" if tab[:id] == active_tab_id %>"
+        data-shell-target="tab"
+        data-role="workspace-tab"
+        data-action="click->shell#activateTab"
+        data-tab-id="<%= tab[:id] %>"
+        data-tab-label="<%= tab[:label] %>"
+        data-tab-trail="<%= tab[:trail] %>"
+        aria-selected="<%= tab[:id] == active_tab_id %>">
+        <span class="workspace-tab__dot"></span>
+        <span class="workspace-tab__label"><%= tab[:label] %></span>
+        <% if tab[:pinned] %>
+          <span class="workspace-tab__pin"><%= ui_icon("pin") %></span>
+        <% else %>
+          <span class="workspace-tab__close" data-action="click->shell#closeTab" aria-label="<%= tab[:label] %> 닫기">×</span>
+        <% end %>
+      </button>
+    <% end %>
+  </div>
+
+  <button type="button" class="tab-strip__menu" aria-label="탭 메뉴">
+    <%= ui_icon("more-horizontal") %>
+  </button>
+</section>

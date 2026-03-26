@@ -1,0 +1,15 @@
+<div class="<%= wrapper_class %>" style="<%= wrapper_style %>" data-search-form-target="fieldGroup">
+  <fieldset class="fieldset w-full search-form-fieldset">
+    <label class="label" for="<%= from_id %>">
+      <span class="label-text"><%= label_text %></span>
+    </label>
+    <div class="join w-full search-form-range">
+      <input id="<%= from_id %>" name="<%= from_name %>" value="<%= from_value %>" type="date" class="input input-bordered join-item w-full search-form-control">
+      <span class="search-form-range__divider join-item">~</span>
+      <input id="<%= to_id %>" name="<%= to_name %>" value="<%= to_value %>" type="date" class="input input-bordered join-item w-full search-form-control">
+    </div>
+    <% if help_text.present? %>
+      <p class="label"><span class="label-text-alt"><%= help_text %></span></p>
+    <% end %>
+  </fieldset>
+</div>

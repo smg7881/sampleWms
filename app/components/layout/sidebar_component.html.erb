@@ -1,0 +1,58 @@
+<aside class="app-sidebar" data-controller="sidebar">
+  <div class="app-sidebar__brand">
+    <div class="brand-mark"><%= brand[:mark] %></div>
+    <div>
+      <div class="brand-name"><%= brand[:name] %></div>
+    </div>
+  </div>
+
+  <nav class="app-sidebar__nav">
+    <% sections.each do |section| %>
+      <section class="sidebar-section" data-role="sidebar-section">
+        <button
+          type="button"
+          class="sidebar-section__trigger <%= "is-open" if section[:open] %>"
+          data-action="click->sidebar#toggleSection"
+          aria-expanded="<%= section[:open] %>">
+          <span class="sidebar-section__label">
+            <span class="sidebar-section__icon"><%= ui_icon(section[:icon]) %></span>
+            <span><%= section[:label] %></span>
+          </span>
+          <%= ui_icon("chevron-right", css_class: "sidebar-section__chevron") %>
+        </button>
+
+        <div class="sidebar-section__body <%= "is-open" if section[:open] %>">
+          <% section[:items].each do |item| %>
+            <% if item[:href].present? %>
+              <%= link_to item[:href], class: "sidebar-menu__button", data: { role: "sidebar-item", turbo_frame: "_top" } do %>
+                <span class="sidebar-menu__icon"><%= ui_icon(item[:icon]) %></span>
+                <span class="sidebar-menu__label"><%= item[:label] %></span>
+              <% end %>
+            <% else %>
+              <button
+                type="button"
+                class="sidebar-menu__button <%= "is-active" if item[:id] == "overview" %>"
+                data-shell-target="menuItem"
+                data-role="sidebar-item"
+                data-action="click->shell#openTab"
+                data-tab-id="<%= item[:id] %>"
+                data-tab-label="<%= item[:label] %>"
+                data-tab-trail="<%= item[:trail] %>">
+                <span class="sidebar-menu__icon"><%= ui_icon(item[:icon]) %></span>
+                <span class="sidebar-menu__label"><%= item[:label] %></span>
+              </button>
+            <% end %>
+          <% end %>
+        </div>
+      </section>
+    <% end %>
+  </nav>
+
+  <div class="app-sidebar__footer">
+    <div class="app-sidebar__footer-mark">WM</div>
+    <div>
+      <div class="app-sidebar__footer-title">관리자</div>
+      <div class="app-sidebar__footer-copy">admin@example.com</div>
+    </div>
+  </div>
+</aside>

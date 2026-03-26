@@ -1,0 +1,86 @@
+<%
+  popup_error = code_error_text.presence || error_text
+  display_style = field[:hide_display] ? nil : "flex: 1 1 auto; min-width: 0; #{control_style}"
+  code_style = field[:code_width].present? ? "width: #{field[:code_width]}; max-width: #{field[:code_width]};" : nil
+  button_style = field[:button_width].present? ? "width: #{field[:button_width]}; min-width: #{field[:button_width]};" : nil
+%>
+<div <%= tag.attributes(class: wrapper_class, style: wrapper_style, data: wrapper_data) %>>
+  <div
+    data-controller="search-popup"
+    data-search-popup-items-value='<%= popup_items_json %>'
+    data-search-popup-title-value="<%= popup_title_text %>">
+    <fieldset class="fieldset w-full resource-form-fieldset">
+      <label class="label" for="<%= code_field_id %>">
+        <span class="label-text"><%= label_text %></span>
+      </label>
+      <div class="resource-form-popup">
+        <% unless field[:hide_display] %>
+          <input
+            id="<%= field_id %>"
+            name="<%= input_name %>"
+            value="<%= field_value %>"
+            type="text"
+            class="input input-bordered resource-form-control<%= ' resource-form-control--error' if popup_error.present? %>"
+            style="<%= display_style %>"
+            placeholder="<%= placeholder_text.presence || "#{label_text} 선택" %>"
+            readonly
+            data-search-popup-target="display"
+            <%= tag.attributes(data: input_data.except(:all_options, :depends_on, :depends_filter)) %>>
+        <% end %>
+
+        <input
+          id="<%= code_field_id %>"
+          name="<%= code_input_name %>"
+          value="<%= code_field_value %>"
+          type="text"
+          class="input input-bordered resource-form-control resource-form-popup__code<%= ' resource-form-control--error' if popup_error.present? %>"
+          style="<%= code_style %>"
+          <%= 'required' if field[:required] %>
+          <%= 'readonly' if field[:readonly] || true %>
+          data-search-popup-target="code"
+          <%= tag.attributes(data: input_data.except(:all_options, :depends_on, :depends_filter)) %>>
+
+        <button type="button" class="btn btn-square btn-ghost resource-form-popup__button" style="<%= button_style %>" <%= tag.attributes(data: popup_button_data) %>>
+          <%= ui_icon('search') %>
+        </button>
+      </div>
+      <% if popup_error.present? %>
+        <p class="label"><span class="label-text-alt text-error"><%= popup_error %></span></p>
+      <% elsif help_text.present? %>
+        <p class="label"><span class="label-text-alt"><%= help_text %></span></p>
+      <% end %>
+    </fieldset>
+
+    <dialog class="resource-popup-modal" data-search-popup-target="dialog">
+      <form method="dialog" class="resource-popup-modal__surface">
+        <div class="resource-popup-modal__header">
+          <div>
+            <p class="resource-popup-modal__eyebrow">Popup Search</p>
+            <h3 data-search-popup-target="title"><%= popup_title_text %></h3>
+          </div>
+          <button type="button" class="btn btn-sm btn-ghost" data-action="click->search-popup#close">닫기</button>
+        </div>
+
+        <div class="resource-popup-modal__search">
+          <input type="search" class="input input-bordered resource-popup-modal__query" placeholder="코드 또는 명칭 검색" data-search-popup-target="query" data-action="input->search-popup#filter">
+        </div>
+
+        <div class="resource-popup-modal__table-wrap">
+          <table class="resource-popup-modal__table">
+            <thead>
+              <tr>
+                <th>코드</th>
+                <th>명칭</th>
+                <th>참고</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody data-search-popup-target="list"></tbody>
+          </table>
+        </div>
+
+        <p class="resource-popup-modal__empty" data-search-popup-target="empty" hidden>검색 결과가 없습니다.</p>
+      </form>
+    </dialog>
+  </div>
+</div>

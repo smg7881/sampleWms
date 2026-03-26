@@ -1,0 +1,33 @@
+﻿<section <%= tag.attributes(**wrapper_attrs) %>>
+  <% if title.present? %>
+    <%= render ResourceForm::HeaderComponent.new(title: title, description: description) %>
+  <% end %>
+
+  <% if model.errors.any? %>
+    <div class="resource-form-error-summary" data-resource-form-target="errorSummary">
+      <ul>
+        <% model.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= helpers.form_with(**form_options) do |form| %>
+    <div class="resource-form-grid">
+      <%= render Ui::FormFields::RendererComponent.new(
+        fields: fields,
+        values: {},
+        mode: :model,
+        cols: cols,
+        form: form,
+        model: model,
+        target_controller: target_controller
+      ) %>
+
+      <% if show_buttons %>
+        <%= render ResourceForm::ActionsComponent.new(submit_label: submit_label, cancel_url: cancel_url) %>
+      <% end %>
+    </div>
+  <% end %>
+</section>

@@ -1,0 +1,40 @@
+<section
+  class="search-form-card card border border-base-300 bg-base-100 shadow-xl"
+  data-controller="search-form"
+  data-search-form-collapsed-value="<%= collapse_enabled? %>"
+  data-search-form-collapsed-rows-value="<%= collapsed_rows %>">
+  <div class="card-body gap-4">
+    <div class="search-form-card__header">
+      <h2 class="search-form-card__title"><%= title %></h2>
+      <% if description.present? %>
+        <p class="search-form-card__description"><%= description %></p>
+      <% end %>
+    </div>
+
+    <%= form_with url: url, method: :get, html: { class: 'search-form-card__form', novalidate: true, data: { search_form_target: 'form', action: 'submit->search-form#search' } } do %>
+      <div class="search-form-grid">
+        <%= render Ui::FormFields::RendererComponent.new(fields: fields_before_actions, values: values, mode: :search, cols: cols) %>
+
+        <div class="search-form-field search-form-actions search-form-actions--grid" style="<%= actions_wrapper_style %>" data-search-form-target="actions">
+          <button type="button" class="btn btn-sm btn-outline" data-action="click->search-form#reset"><%= "초기화" %></button>
+          <button type="submit" class="btn btn-sm btn-primary"><%= "검색" %></button>
+          <% if collapse_enabled? %>
+            <button
+              type="button"
+              class="btn btn-sm btn-ghost search-form-collapse-button"
+              data-search-form-target="collapseButton"
+              data-action="click->search-form#toggleCollapse"
+              aria-expanded="false">
+              <span data-search-form-target="collapseLabel"><%= "펼치기" %></span>
+              <span class="search-form-collapse-button__icon"><%= ui_icon('chevron-down') %></span>
+            </button>
+          <% end %>
+        </div>
+
+        <% if fields_after_actions.any? %>
+          <%= render Ui::FormFields::RendererComponent.new(fields: fields_after_actions, values: values, mode: :search, cols: cols) %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</section>

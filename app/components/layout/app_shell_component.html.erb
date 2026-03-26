@@ -1,0 +1,14 @@
+<div class="app-shell" data-controller="shell" data-shell-active-tab-value="<%= active_tab_id %>">
+  <%= render Layout::SidebarComponent.new(brand: brand, sections: sections) %>
+
+  <main class="app-shell__main">
+    <%= render Layout::TopbarComponent.new(brand: brand, active_trail: active_trail) %>
+    <%= render Layout::TabBarComponent.new(tabs: tabs, active_tab_id: active_tab_id) %>
+
+    <section class="workspace">
+      <% panels.each_value do |panel| %>
+        <%= render Workspace::PanelComponent.new(panel: panel, active: panel[:id] == active_tab_id) %>
+      <% end %>
+    </section>
+  </main>
+</div>
